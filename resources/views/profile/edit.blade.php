@@ -10,7 +10,6 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <h2 >Edit Profile</h2>
-                    {{gettype($user->profile)}}
                     {{-- 修改使者用名稱 --}}
                     <div class="form-group">
                         <label for="title" class="col-form-label">title</label>
@@ -19,7 +18,7 @@
                             type="text"
                             class="form-control @error('title') is-invalid @enderror"
                             name="title"
-                            {{-- value="{{ old('title') ?? $user->profile->title}}" --}}
+                            value="{{ old('title') ??  $user->profile->title}}"
                             autocomplete="title"
                             autofocus>
     
@@ -38,7 +37,7 @@
                             type="text"
                             class="form-control @error('description') is-invalid @enderror"
                             name="description"
-                            value="{{ old('description') }}"
+                            value="{{ old('description') ?? $user->profile->description }}"
                             autocomplete="description"
                             autofocus>
     
@@ -58,7 +57,7 @@
                             type="text"
                             class="form-control @error('url') is-invalid @enderror"
                             name="url"
-                            value="{{ old('url') }}"
+                            value="{{ old('url') ?? $user->profile->url }}"
                             autocomplete="url"
                             autofocus>
     
@@ -77,6 +76,7 @@
                             type="file"
                             class="form-control"
                             name="image"
+                            value="{{$user->image ?? ''}}"
                             >
                         
                         <!-- img 錯誤訊息 -->

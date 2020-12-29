@@ -14,6 +14,15 @@ class PostsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(){
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+
+        // $posts = Post::whereIn('user_id', $users)->orderBy('created_at','DESC')->get();
+        // $posts = Post::whereIn('user_id', $users)->latest()->get();
+        $posts = Post::whereIn('user_id', $users)->latest()->paginate(3);
+        return view('posts.index', compact('posts'));
+    }
+
     public function create(){
         // tips:
         // 建議頁面命名 controllerName.methodName

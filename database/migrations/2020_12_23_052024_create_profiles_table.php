@@ -24,6 +24,7 @@ class CreateProfilesTable extends Migration
             // 這個部分用 text?
             $table->text('description')->nullable();
             $table->string('url')->nullable();
+            $table->string('image')->nullable();
 
             $table->timestamps();
 

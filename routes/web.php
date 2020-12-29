@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\NewUserWelcomMail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,11 +13,30 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
+
+
+Route::get('/mail', function(){
+    return new NewUserWelcomMail();
+});
+
+
+//follow
+Route::post('/follow/{user}', 'FollowsController@store');
+
+// 整併 login 的 進入的部分
+Route::get('/', 'PostsController@index');
+// Add new post page
+Route::get('/p/create', 'PostsController@create');
+// add new post method
+Route::post('/p', 'PostsController@store');
+// open one post
+Route::get('/p/{post}', 'PostsController@show');
+
 
 // profile
 // HomeController @ 裡面方法
@@ -27,12 +48,6 @@ Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edi
 Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 
 
-// Add new post page
-Route::get('/p/create', 'PostsController@create');
-// open one post
-Route::get('/p/{post}', 'PostsController@show');
-// add new post method
-Route::post('/p', 'PostsController@store');
 
 
 

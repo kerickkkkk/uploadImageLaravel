@@ -5,31 +5,33 @@
     <div class="row">
         <div class="col-3">
             <div class="logo p-4 rounded bg-warning text-center">
-                logo
+                <img src="{{$user->profile->defaultImage()}}" class="img-fluid" alt="">
             </div>
         </div>
         <div class="col-9">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 {{-- 使用者名稱 --}}
                 <div>
-                    <h3>{{$user -> username?? '' }}</h3>
-                    <a href="/profile/{{$user->id}}/edit" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                    <div class="d-flex">
+                        <h4 class="mr-2">{{$user -> username?? '' }}</h4>
+                        <follow-btn user-id="{{$user->id}}"  follows="{{$follows}}"></follow-btn>
+                    </div>
+
+                    @can('update', $user->profile)
+                        <a href="/profile/{{$user->id}}/edit" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                    @endcan
+
                 </div>
-                <a href="/p/create" class="btn btn-sm btn-primary">add new post</a>
+                @can('update', $user->profile)
+                    <a href="/p/create" class="btn btn-sm btn-primary">add new post</a>
+                @endcan
+
             </div>
             <ul class="d-flex pl-0" style=" list-style-type: none;">
-                    <li class="mr-5">
-                        <strong class="mr-1">
-                            {{$user->posts->count()}}
-                        </strong>
-                        post
-                    </li>
-                    <li class="mr-5"><strong class="mr-1">123</strong>
-                        <!-- follower -->
-
-                    </li>
-                    <li><strong class="mr-1">123</strong>following</li>
-                </ul>
+                <li class="mr-5"><strong class="mr-1">{{ $postCount }}</strong>post</li>
+                <li class="mr-5"><strong class="mr-1">{{ $followersCount}}</strong>followers</li>
+                <li><strong class="mr-1">{{$followingCount}}</strong>following</li>
+            </ul>
             <h3 class="font-weight-bold">
                 <!-- ig clone -->
                 <!-- 從 user 關聯到 profile 裡面的 title  -->
